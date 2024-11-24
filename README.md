@@ -27,16 +27,47 @@
 ## **Estrutura do Projeto**
 
 ### **Backend**
-- **Localização**: `backend/trabdispositivos`
-- **Pré-requisitos**:
-  - **Maven**: Versão 3.2.5.
-  - **Java**: Versão 11.
-  - **MySQL**:
-    - Rodando na porta **3306**.
-    - **Username**: `root`.
-    - **Senha**: `1234`.
-  - Não é necessário criar tabelas ou inserir dados manualmente. O projeto utiliza **migrations** para criação automática de tabelas e dados iniciais.
 
+#### **Localização**
+O backend do projeto está localizado no diretório:  
+`backend/trabdispositivos`
+
+#### **Pré-requisitos**
+Para rodar o backend do projeto, é necessário configurar os seguintes itens:
+
+1. **Java**: Versão 11.
+2. **Maven**: Versão 3.2.5.
+3. **MySQL**:
+   - Servidor local rodando na porta **3306**.
+   - **Usuário**: `root`.
+   - **Senha**: `1234`.
+
+Não é necessário criar tabelas ou inserir dados manualmente no banco de dados, pois o projeto utiliza **migrations** para realizar automaticamente a criação das tabelas e os inserts iniciais necessários.
+
+#### **Arquitetura**
+
+O backend segue a arquitetura **Repository-Service-Controller**, que organiza o código em camadas para garantir separação de responsabilidades:
+
+- **Repository**: Gerencia a interação direta com o banco de dados, utilizando interfaces do Spring Data JPA para simplificar operações CRUD.
+- **Service**: Centraliza as regras de negócio, encapsulando a lógica necessária para manipular os dados recebidos dos repositórios.
+- **Controller**: Recebe as requisições HTTP, chama os métodos do Service e retorna as respostas no formato JSON.
+
+Além disso, utiliza modelos **Request** e **Response** para organizar os dados que entram e saem da API:
+
+- **Request**: Representa os dados enviados pelo cliente à API, garantindo validação e segurança.
+- **Response**: Define os dados que serão retornados ao cliente, ocultando informações desnecessárias ou sensíveis.
+
+#### **Descrição do Projeto**
+O backend é responsável por gerenciar a API para cadastro e gestão de serviços em uma plataforma de trabalhos freelancers. As principais tabelas utilizadas no banco de dados são:
+
+- **`usuario`**: Armazena informações básicas de cada usuário (nome, login, senha, especialidades, tipo de usuário - cliente ou freelancer).
+- **`especialidade`**: Lista as especialidades disponíveis na plataforma. A migration `V010` já inclui 10 especialidades iniciais.
+- **`tipo_usuario`**: Define os dois tipos possíveis de usuários: cliente e freelancer.
+- **`usuario_avaliacao`**: Registra as avaliações recebidas pelos freelancers.
+- **`servico`**: Representa os serviços criados pelos clientes, incluindo descrição, valor estimado e cliente responsável.
+- **`servico_especialidade`**: Relaciona serviços às especialidades necessárias para sua execução.
+- **`servico_comentario`**: Armazena os comentários feitos pelos freelancers nos serviços, incluindo orçamentos sugeridos.
+- **`servico_usuario`**: Relaciona serviços aos freelancers que aceitaram realizá-los.
 ### **Frontend**
 - **Localização**: `frontend/trabfinal`
 
